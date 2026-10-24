@@ -25,8 +25,9 @@ dependency pins, release flow and tooling.
 ## Status
 
 The Astro website renders the landing page and Markdown documentation with shared
-navigation. Website development instructions live in [`site/`](site/README.md) and is published at
-https://tjorim.github.io/custom-mygrid/ after the Pages workflow runs on `main`.
+navigation. The website is published at https://tjorim.github.io/custom-mygrid/
+after the Pages workflow runs on `main`. Website development instructions live in
+[`site/`](site/README.md).
 Start with the [ModuleTwo setup guide](https://tjorim.github.io/custom-mygrid/docs/moduletwo/) or
 [VoltBridge setup guide](https://tjorim.github.io/custom-mygrid/docs/voltbridge/). See the
 [VoltBridge API reference](https://tjorim.github.io/custom-mygrid/docs/voltbridge-api/) and

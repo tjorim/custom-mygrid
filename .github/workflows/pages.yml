@@ -21,11 +21,15 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+      - name: Install pinned npm
+        run: npm install --global npm@10.9.8
       - run: npm ci
       - name: Build Astro site
         run: npm run build
       - name: Check routes, links, anchors and assets
-        run: npm test
+        run: |
+          npm test
+          npm run check:site
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site

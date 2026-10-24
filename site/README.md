@@ -9,9 +9,11 @@ section links, scrollable tables and native disclosure controls work without JS.
 
 From the repository root, use Node **24.14.0** (`nvm use`) and npm **10.9.8**.
 Astro and the Markdown processor are pinned in `package.json`; commit changes to
-`package-lock.json` together with dependency changes. CI uses `npm ci`.
+`package-lock.json` together with dependency changes. CI explicitly installs the
+pinned npm version before running `npm ci`.
 
 ```sh
+npm install --global npm@10.9.8
 npm ci
 npm run dev
 ```
@@ -21,15 +23,18 @@ in development. After adding assets, restart the command to copy them again.
 To inspect exactly what will be published:
 
 ```sh
-npm run build
 npm test
+npm run build
+npm run check:site
 npm run preview
 ```
 
-Preview uses the same URL and repository prefix. `npm test` validates all output
-pages, internal links, fragments, local assets and legacy redirect targets, and
-runs focused routing tests. The old `python3 scripts/build-site.py` entry point
-now delegates to the Astro build; install dependencies first.
+Preview uses the same URL and repository prefix. `npm test` runs focused routing
+tests and works immediately after `npm ci`, without a prior build. After
+`npm run build`, `npm run check:site` validates all output pages, internal links,
+fragments, local assets and legacy redirect targets. The old
+`python3 scripts/build-site.py` entry point now delegates to the Astro build;
+install dependencies first.
 
 ## Project structure
 
@@ -83,11 +88,12 @@ the production build and link checker under that prefix before publishing.
 ## CI and deployment
 
 In GitHub **Settings → Pages**, choose **GitHub Actions** as the source.
-The Website workflow installs the pinned Node toolchain, runs `npm ci`, builds
-all pages and validates output for both pull requests and pushes to `main`.
+The Website workflow installs the pinned Node and npm toolchain, runs `npm ci`,
+builds all pages and validates output for both pull requests and pushes to `main`.
 Its path filters include Markdown, site sources, assets, build scripts, dependency
 manifests and the Node pin. It uploads `_site/` with `upload-pages-artifact` and
-uses the existing Pages deploy job only on `main`; manual runs can redeploy.
+uses the existing Pages deploy job only on `main`. Manual runs on `main` can
+redeploy; manual runs on other branches build and test without publishing.
 Expected public URL: <https://tjorim.github.io/custom-mygrid/>.
 
 This layout is reusable without a shared package or identical branding: preserve
