@@ -10,9 +10,12 @@ This project is not affiliated with, endorsed by or supported by MyGrid. Protoco
 | --- | --- |
 | [python-mygrid-modbus](https://github.com/tjorim/python-mygrid-modbus) | Python library for the ModuleTwo (Modbus TCP, register map 2), PyPI `mygrid-modbus` |
 | [python-mygrid-voltbridge](https://github.com/tjorim/python-mygrid-voltbridge) | Python client for the VoltBridge (HTTP API, DSMR telegram, UDP push), PyPI `mygrid-voltbridge` |
-| [ha-mygrid-modbus](https://github.com/tjorim/ha-mygrid-modbus) | HACS custom integration for the ModuleTwo (generated, vendors the library) |
-| [ha-mygrid-voltbridge](https://github.com/tjorim/ha-mygrid-voltbridge) | HACS custom integration for the VoltBridge (generated, vendors the library) |
-| [ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) | Umbrella integration source shaped for a possible Home Assistant core contribution, plus the generator for the two HACS repositories |
+| [ha-mygrid-modbus](https://github.com/tjorim/ha-mygrid-modbus) | HACS custom integration for the ModuleTwo (hand-maintained, imports the library from PyPI) |
+| [ha-mygrid-voltbridge](https://github.com/tjorim/ha-mygrid-voltbridge) | HACS custom integration for the VoltBridge (hand-maintained, imports the library from PyPI) |
+| [ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) | Dormant overlay for a possible Home Assistant core contribution (domain `mygrid`) |
+
+See the [architecture and contributor guide](docs/architecture.md) for source ownership,
+dependency pins, release flow and tooling.
 
 ## Related
 
@@ -21,7 +24,13 @@ This project is not affiliated with, endorsed by or supported by MyGrid. Protoco
 
 ## Status
 
-The site is planned, not built yet. Work is tracked in the [issues](https://github.com/tjorim/custom-mygrid/issues).
+The buildless landing page lives in [`site/`](site/README.md) and is published at
+https://tjorim.github.io/custom-mygrid/ after the Pages workflow runs on `main`.
+Start with the [ModuleTwo setup guide](docs/moduletwo.md) or
+[VoltBridge setup guide](docs/voltbridge.md). See the
+[VoltBridge API reference](docs/voltbridge-api.md) and
+[documentation index](docs/README.md) for protocol documentation and repository links.
+Work is tracked in the [issues](https://github.com/tjorim/custom-mygrid/issues).
 
 ## License
 
