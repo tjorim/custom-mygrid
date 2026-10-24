@@ -1,2 +1,23 @@
 # custom-mygrid
-Unofficial docs hub for the MyGrid ModuleTwo and VoltBridge Home Assistant integrations and Python libraries
+
+Unofficial documentation hub for community Home Assistant integrations and Python libraries for **MyGrid** devices: the ModuleTwo home battery and the VoltBridge P1 meter adapter.
+
+This project is not affiliated with, endorsed by or supported by MyGrid. Protocol notes for the VoltBridge come from reverse engineering one device; the ModuleTwo notes come from MyGrid's published Modbus manual.
+
+## Repositories
+
+| Repository | Purpose |
+| --- | --- |
+| [python-mygrid-modbus](https://github.com/tjorim/python-mygrid-modbus) | Python library for the ModuleTwo (Modbus TCP, register map 2), PyPI `mygrid-modbus` |
+| [python-mygrid-voltbridge](https://github.com/tjorim/python-mygrid-voltbridge) | Python client for the VoltBridge (HTTP API, DSMR telegram, UDP push), PyPI `mygrid-voltbridge` |
+| [ha-mygrid-modbus](https://github.com/tjorim/ha-mygrid-modbus) | HACS custom integration for the ModuleTwo (generated, vendors the library) |
+| [ha-mygrid-voltbridge](https://github.com/tjorim/ha-mygrid-voltbridge) | HACS custom integration for the VoltBridge (generated, vendors the library) |
+| [ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) | Umbrella integration source shaped for a possible Home Assistant core contribution, plus the generator for the two HACS repositories |
+
+## Status
+
+The site is planned, not built yet. Work is tracked in the [issues](https://github.com/tjorim/custom-mygrid/issues).
+
+## License
+
+Apache-2.0
