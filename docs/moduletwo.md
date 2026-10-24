@@ -9,8 +9,9 @@ pending; it targets **Modbus register map version 2**.
 
 ## Before you start
 
-- Run **Home Assistant 2026.10.2 or newer** (Python 3.14.2+). The HACS package
-  includes its library; no separate Python package installation is needed.
+- Run **Home Assistant 2026.10.2 or newer** (Python 3.14.2+). Home Assistant installs the
+  integration’s Python library from PyPI automatically; no separate installation
+  is needed.
 - In the **MyGrid v2 app**, set the battery's **control source to Home Assistant**.
   The manufacturer's Modbus manual says this opens the port, and that the
   MyGrid control source leaves it closed. Home Assistant appears as a choice
@@ -33,21 +34,22 @@ pending; it targets **Modbus register map version 2**.
 
 As of **2026-10-24**, following MyGrid's Modbus manual and selecting Home
 Assistant as the control source in the MyGrid v2 app did not open TCP port 502
-on the development unit. MyGrid support replied that **Modbus should be allowed
-by default** and that they would ask their IT team to enable it. Hardware
-validation remains pending while the port refuses connections.
+on the development unit. MyGrid support confirmed that **Modbus is closed
+by default** and said they would ask their IT team to open it, with no timeline
+given. Hardware validation remains pending while the port refuses connections.
 
 If the app setting is correct and port 502 still refuses connections, contact
 [MyGrid support](mailto:support@mygrid.energy) and ask them to **enable Modbus TCP
-for the battery**. The integration cannot open a closed device port. This is an
-observed issue on the development unit, not a claim that every battery requires
-support intervention; the manual describes the app setting as opening the port.
+for the battery**. The integration cannot open a closed device port. Until
+MyGrid clarifies otherwise, expect to need support to open the port; the manual
+describes the app setting alone as opening it.
 
 ### Open questions for MyGrid
 
 These questions remain unanswered as of **2026-10-24**:
 
-- What exactly does the IT team change to enable Modbus TCP?
+- What exactly does the IT team change to enable Modbus TCP, and is this
+  enabled per unit, per account or by firmware?
 - Which firmware version provides Modbus, and which version is the development
   unit running?
 - Is the control-source setting stored on the battery or checked against MyGrid's
@@ -217,7 +219,7 @@ HACS download (or manual directory) and restart to uninstall.
 ## Sources and related guides
 
 These instructions follow the [integration README](https://github.com/tjorim/ha-mygrid-modbus#readme)
-and [canonical integration source](https://github.com/tjorim/ha-mygrid-core/tree/main/homeassistant/components/mygrid).
+and [HACS integration source](https://github.com/tjorim/ha-mygrid-modbus/tree/main/custom_components/mygrid_modbus).
 See the integration's [hardware acceptance checklist](https://github.com/tjorim/ha-mygrid-modbus/blob/main/docs/hardware-testing.md)
 and [protocol reference](https://github.com/tjorim/ha-mygrid-modbus/blob/main/docs/protocol.md)
 for validation and register details, the [VoltBridge setup guide](voltbridge.md)

@@ -10,9 +10,12 @@ This project is not affiliated with, endorsed by or supported by MyGrid. Protoco
 | --- | --- |
 | [python-mygrid-modbus](https://github.com/tjorim/python-mygrid-modbus) | Python library for the ModuleTwo (Modbus TCP, register map 2), PyPI `mygrid-modbus` |
 | [python-mygrid-voltbridge](https://github.com/tjorim/python-mygrid-voltbridge) | Python client for the VoltBridge (HTTP API, DSMR telegram, UDP push), PyPI `mygrid-voltbridge` |
-| [ha-mygrid-modbus](https://github.com/tjorim/ha-mygrid-modbus) | HACS custom integration for the ModuleTwo (generated, vendors the library) |
-| [ha-mygrid-voltbridge](https://github.com/tjorim/ha-mygrid-voltbridge) | HACS custom integration for the VoltBridge (generated, vendors the library) |
-| [ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) | Umbrella integration source shaped for a possible Home Assistant core contribution, plus the generator for the two HACS repositories |
+| [ha-mygrid-modbus](https://github.com/tjorim/ha-mygrid-modbus) | HACS custom integration for the ModuleTwo (hand-maintained, imports the library from PyPI) |
+| [ha-mygrid-voltbridge](https://github.com/tjorim/ha-mygrid-voltbridge) | HACS custom integration for the VoltBridge (hand-maintained, imports the library from PyPI) |
+| [ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) | Dormant umbrella overlay for a possible Home Assistant core contribution (domain `mygrid`) |
+
+See the [architecture and contributor guide](docs/architecture.md) for source ownership,
+dependency pins, release flow and tooling.
 
 ## Related
 
