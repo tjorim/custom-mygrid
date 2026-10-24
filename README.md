@@ -21,7 +21,10 @@ This project is not affiliated with, endorsed by or supported by MyGrid. Protoco
 
 ## Status
 
-The site is planned, not built yet. Work is tracked in the [issues](https://github.com/tjorim/custom-mygrid/issues).
+The buildless landing page lives in [`site/`](site/README.md) and is published at
+https://tjorim.github.io/custom-mygrid/ after the Pages workflow runs on `main`.
+See the [documentation index](docs/README.md) for guides and repository links.
+Work is tracked in the [issues](https://github.com/tjorim/custom-mygrid/issues).
 
 ## License
 
