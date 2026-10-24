@@ -15,7 +15,10 @@ pending; it targets **Modbus register map version 2**.
 - In the **MyGrid v2 app**, set the battery's **control source to Home Assistant**.
   The manufacturer's Modbus manual says this opens the port, and that the
   MyGrid control source leaves it closed. Home Assistant appears as a choice
-  only when it has been configured for that battery.
+  only when it has been configured for that battery. **Modbus is closed by
+  default**: expect to need MyGrid support’s IT team to open TCP port 502 for
+  your unit. The app setting alone did not open it on the development unit;
+  see the [known issue and open questions](#known-issue-port-502-refuses-connections).
 - Use the **Auto cluster leader**, never a Follow unit. Leader setpoints and live
   limits represent household totals. One configured leader creates one device;
   the protocol does not enumerate followers.
@@ -69,7 +72,7 @@ Track answers and test results in [issue #5](https://github.com/tjorim/custom-my
 When MyGrid answers, update this page together with the
 [library README](https://github.com/tjorim/python-mygrid-modbus#readme),
 [HACS README](https://github.com/tjorim/ha-mygrid-modbus#readme) and
-[draft Home Assistant documentation](https://github.com/tjorim/ha-mygrid-core/blob/main/documentation/home-assistant.io/source/_integrations/mygrid.markdown),
+[dormant core overlay’s draft Home Assistant documentation](https://github.com/tjorim/ha-mygrid-core/blob/main/documentation/home-assistant.io/source/_integrations/mygrid.markdown),
 keeping confirmed behavior separate from untested hypotheses.
 
 ### Manufacturer-supported MQTT alternative

@@ -36,7 +36,7 @@ own HACS repository. The naming convention is `ha-mygrid-<library>`, such as
 
 ## Dormant Home Assistant core overlay
 
-[ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) is a dormant umbrella
+[ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) is a dormant
 overlay using the `mygrid` domain, retained for a possible Home Assistant core
 contribution. It is not the source of the HACS repositories. **Do not run
 `scripts/sync_hacs.py` against the HACS repositories.**
