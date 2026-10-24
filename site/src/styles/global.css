@@ -297,3 +297,118 @@ tbody th {
 .status {
   color:var(--muted)
 }
+
+/* Documentation shares the landing page palette and typography. */
+.docs-layout {
+  display:grid;
+  grid-template-columns:220px minmax(0,1fr);
+  gap:56px;
+  padding-top:40px;
+  padding-bottom:72px
+}
+.docs-sidebar {
+  font-size:.9rem;
+  line-height:1.6
+}
+.docs-sidebar nav {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin:24px 0
+}
+.docs-sidebar nav a {
+  padding:6px 10px;
+  border-left:3px solid transparent
+}
+.docs-sidebar a[aria-current=page] {
+  border-color:var(--ink);
+  background:var(--accent);
+  font-weight:700
+}
+.toc summary {
+  cursor:pointer;
+  font-weight:600
+}
+.toc ul {
+  padding-left:20px
+}
+.toc li {
+  margin:10px 0
+}
+.prose {
+  min-width:0;
+  line-height:1.75;
+  overflow-wrap:anywhere
+}
+.prose h1 {
+  font-size:clamp(2rem,4vw,3.2rem);
+  line-height:1.15;
+  letter-spacing:-.04em;
+  margin:24px 0 32px
+}
+.prose h2 {
+  font-size:1.7rem;
+  margin:48px 0 20px;
+  padding-top:16px;
+  border-top:1px solid var(--line)
+}
+.prose h3 {
+  font-size:1.25rem;
+  margin:32px 0 16px;
+  letter-spacing:-.02em
+}
+.prose :is(h1,h2,h3,h4) {
+  scroll-margin-top:24px
+}
+.prose img {
+  max-width:100%;
+  height:auto
+}
+.prose pre {
+  padding:20px;
+  overflow-x:auto;
+  border:1px solid var(--line);
+  border-radius:6px
+}
+.prose pre code {
+  overflow-wrap:normal
+}
+.prose table {
+  display:block;
+  overflow-x:auto;
+  font-size:.9rem
+}
+.prose :is(th,td) {
+  padding:12px
+}
+.prose blockquote {
+  margin-left:0;
+  padding-left:20px;
+  border-left:4px solid var(--ink)
+}
+.source-links {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px 24px;
+  font-size:.8rem;
+  color:var(--muted)
+}
+:focus-visible {
+  outline:3px solid #688c34;
+  outline-offset:5px
+}
+@media(max-width:850px) {
+  .docs-layout {
+    grid-template-columns:1fr;
+    gap:24px
+  }
+  .docs-sidebar nav {
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:6px
+  }
+  .toc {
+    border-bottom:1px solid var(--line);
+    padding-bottom:16px
+  }
+}

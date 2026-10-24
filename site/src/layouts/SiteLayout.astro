@@ -1,0 +1,29 @@
+---
+import '../styles/global.css';
+import { siteUrl } from '../../lib/paths.mjs';
+const { title, description = 'Unofficial Home Assistant integrations, Python libraries and documentation for MyGrid ModuleTwo and VoltBridge devices.', documentation = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" href={siteUrl('assets/icon.svg')} type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="wrap">
+      <a class="brand" href={siteUrl()}><img src={siteUrl('assets/icon.svg')} width="36" height="36" alt="" />custom-mygrid</a>
+      <nav aria-label="Main navigation">
+        <a href={siteUrl('#devices')}>Devices</a>
+        <a href={siteUrl('#repositories')}>Repositories</a>
+        <a href={siteUrl('docs/')} aria-current={documentation ? 'true' : undefined}>Documentation</a>
+        <a href="https://github.com/tjorim/custom-mygrid">GitHub ↗</a>
+      </nav>
+    </header>
+    <slot />
+    <footer class="wrap"><p><strong>custom-mygrid</strong> · <a href={siteUrl()}>Home</a> · <a href={siteUrl('docs/')}>Documentation</a> · <a href={siteUrl('LICENSE')}>Apache-2.0 license</a></p><p>This unofficial project is not affiliated with, endorsed by or supported by MyGrid.</p></footer>
+  </body>
+</html>

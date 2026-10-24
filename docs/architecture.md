@@ -68,6 +68,13 @@ and hardware requirements before running them. ModuleTwo still needs hardware
 validation; see the [setup guide](moduletwo.md) and its linked acceptance
 checklist.
 
+## Website tooling
+
+This hub uses Astro with static output on GitHub Pages. See
+[website development and publishing](../site/README.md) for the project structure,
+Markdown routing, repository prefix, local commands and CI conventions that other
+projects can reuse.
+
 ## Why older commits look different
 
 Until 2026-10-24, the HACS repositories were generated from `ha-mygrid-core`,
