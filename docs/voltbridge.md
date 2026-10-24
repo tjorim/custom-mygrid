@@ -9,8 +9,9 @@ have not been verified on hardware.
 
 ## Before you start
 
-- Run **Home Assistant 2026.10.2 or newer** (Python 3.14.2+). The integration
-  includes its Python library; do not install a separate Python package.
+- Run **Home Assistant 2026.10.2 or newer** (Python 3.14.2+). Home Assistant installs the
+  integration’s Python library from PyPI automatically; no separate installation
+  is needed.
 - Connect the VoltBridge to your LAN and to an enabled P1 port on the meter.
   Wait for a telegram before adding it: setup needs a P1 serial and a first
   snapshot, and entities depend on the data available then.
@@ -114,7 +115,7 @@ restart to uninstall the integration.
 ## Sources and related guides
 
 These instructions follow the [integration README](https://github.com/tjorim/ha-mygrid-voltbridge#readme),
-[canonical integration source](https://github.com/tjorim/ha-mygrid-voltbridge/tree/main/custom_components/mygrid_voltbridge)
+[HACS integration source](https://github.com/tjorim/ha-mygrid-voltbridge/tree/main/custom_components/mygrid_voltbridge)
 and [UDP implementation](https://github.com/tjorim/python-mygrid-voltbridge/blob/main/src/mygrid_voltbridge/udp.py).
 For protocol details, use the [VoltBridge API reference](voltbridge-api.md).
 See also the [ModuleTwo setup guide](moduletwo.md) and [documentation index](README.md).
