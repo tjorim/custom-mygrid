@@ -25,6 +25,7 @@ The buildless landing page lives in [`site/`](site/README.md) and is published a
 https://tjorim.github.io/custom-mygrid/ after the Pages workflow runs on `main`.
 Start with the [ModuleTwo setup guide](docs/moduletwo.md) or
 [VoltBridge setup guide](docs/voltbridge.md). See the
+[VoltBridge API reference](docs/voltbridge-api.md) and
 [documentation index](docs/README.md) for protocol documentation and repository links.
 Work is tracked in the [issues](https://github.com/tjorim/custom-mygrid/issues).
 
