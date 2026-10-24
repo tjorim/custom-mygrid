@@ -18,3 +18,7 @@ updates:
     commit-message:
       prefix: build
       include: scope
+    groups:
+      # astro and its @astrojs packages are pinned together and must move together.
+      astro:
+        patterns: ["astro", "@astrojs/*"]

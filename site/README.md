@@ -32,14 +32,17 @@ npm run preview
 Preview uses the same URL and repository prefix. `npm test` runs focused routing
 tests and works immediately after `npm ci`, without a prior build. After
 `npm run build`, `npm run check:site` validates all output pages, internal links,
-fragments, local assets and legacy redirect targets. The old
+fragments, local assets and legacy redirect targets, and that every shared page
+carries its canonical URL, Open Graph image and description. The old
 `python3 scripts/build-site.py` entry point now delegates to the Astro build;
 install dependencies first.
 
 ## Project structure
 
 - `site/src/pages/index.astro`: the custom landing page, with its original content.
-- `site/src/layouts/SiteLayout.astro`: shared metadata, skip link, header and footer.
+- `site/src/layouts/SiteLayout.astro`: shared metadata (canonical URL, Open Graph, icons),
+  skip link, header and footer.
+- `site/src/pages/404.astro`: the not-found page GitHub Pages serves for unknown URLs.
 - `site/src/pages/docs/[...slug].astro`: documentation shell, navigation, table of
   contents and explicit GitHub source/edit links.
 - `site/src/styles/global.css`: shared design and responsive documentation styles.
@@ -48,6 +51,8 @@ install dependencies first.
 - `site/README.md`: this guide, also rendered at `docs/website/`.
 - `site/lib/paths.mjs` and `remark-links.mjs`: shared routing and Markdown URL
   rewriting, without changing the source Markdown.
+- `site/lib/nav.mjs`: the grouped documentation navigation. `site/lib/describe.mjs`
+  derives each page's meta description from its first paragraph.
 - `scripts/prepare-site.mjs`: copies `assets/`, optional `docs/assets/`, and
   `LICENSE` into generated `site/public/`, and adds `.nojekyll`.
 - `_site/`: generated static output, ignored together with `site/public/` and
@@ -57,8 +62,8 @@ install dependencies first.
 
 `docs/README.md` renders at `/custom-mygrid/docs/`; other `docs/*.md` files render
 at `/custom-mygrid/docs/<filename>/`. The route discovers all Markdown in that
-directory automatically. Add important new pages to the documentation navigation
-in `[...slug].astro`. This contributor guide renders at `docs/website/`.
+directory automatically. Add every new page to the documentation navigation
+in `site/lib/nav.mjs`; `npm test` fails when a published page is missing. This contributor guide renders at `docs/website/`.
 
 Astro's Unified Markdown processor supplies GitHub-flavored tables, fenced code
 highlighting and heading IDs. A Remark transform resolves relative links from the
