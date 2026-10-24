@@ -81,8 +81,9 @@ Until 2026-10-24, the HACS repositories were generated from `ha-mygrid-core`,
 with the libraries vendored byte for byte. That model was replaced to focus on
 the libraries and custom HACS integrations. The transition was prepared on
 `own-the-source` in both HACS repositories and `park-core` in the core
-repository; those branches were pending merge when this architecture was
-recorded. Historical generator and vendoring references describe that earlier
-model.
+repository, and all three branches were merged on 2026-10-24. The HACS
+repositories are now hand-maintained, and `ha-mygrid-core` is the dormant
+overlay described above. Historical generator and vendoring references describe
+the earlier model.
 
 See the [documentation index](README.md) for device setup and protocol guides.
