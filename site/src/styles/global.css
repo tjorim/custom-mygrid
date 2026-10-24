@@ -407,8 +407,23 @@ tbody th {
     flex-wrap:wrap;
     gap:6px
   }
+  .docs-group {
+    flex-basis:100%;
+    margin:8px 0 0
+  }
   .toc {
     border-bottom:1px solid var(--line);
     padding-bottom:16px
   }
+}
+.docs-group {
+  margin:18px 0 0;
+  font-family:ui-monospace,monospace;
+  font-size:.68rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--muted)
+}
+.button+.button {
+  margin-left:12px
 }

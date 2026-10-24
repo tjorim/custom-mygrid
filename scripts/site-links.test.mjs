@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { documentRoute, rewriteUrl } from '../site/lib/paths.mjs';
+import { documentRoute, listSources, rewriteUrl } from '../site/lib/paths.mjs';
+import { describe } from '../site/lib/describe.mjs';
+import { navigation } from '../site/lib/nav.mjs';
 import remarkLinks from '../site/lib/remark-links.mjs';
 import { fileURLToPath } from 'node:url';
 
@@ -8,6 +10,22 @@ test('Markdown routes preserve index and contributor locations', () => {
   assert.equal(documentRoute('docs/README.md'), 'docs/');
   assert.equal(documentRoute('docs/moduletwo.md'), 'docs/moduletwo/');
   assert.equal(documentRoute('site/README.md'), 'docs/website/');
+});
+
+test('every published page is in the documentation navigation', () => {
+  const navigable = navigation.flatMap(([, pages]) => pages.map(([source]) => source));
+  const published = listSources().filter(source => source !== 'docs/README.md');
+  assert.deepEqual([...navigable].sort(), published);
+});
+
+test('page descriptions are the first prose paragraph as plain text', () => {
+  const markdown = '# Title\n\n![badge](x.svg)\n\n> note\n\nA [guide](a.md) with `code` and **bold**\ntext.\n\nSecond paragraph.';
+  assert.equal(describe(markdown, 'fallback'), 'A guide with code and bold text.');
+  assert.equal(describe('# Only a title\n\n- item', 'fallback'), 'fallback');
+  assert.equal(describe('<!<!-- x -->--\n\nHi', 'fallback'), 'Hi');
+  assert.equal(describe('<!-- a\n\nb -->\n\nReal text', 'fallback'), 'Real text');
+  const long = describe(`${'word '.repeat(60)}end`, 'fallback');
+  assert.ok(long.length <= 160 && long.endsWith('…'));
 });
 
 test('source-relative links retain fragments and query strings under the base', () => {

@@ -1,35 +1,36 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { documentRoute, siteUrl, repository } from '../../../lib/paths.mjs';
+import { documentRoute, repository, siteUrl } from '../../../lib/paths.mjs';
+import { describe } from '../../../lib/describe.mjs';
+import { navigation } from '../../../lib/nav.mjs';
 
 export async function getStaticPaths() {
-  const modules = import.meta.glob('../../../../docs/*.md', { eager: true });
-  const website = import.meta.glob('../../../README.md', { eager: true });
-  return Object.entries({ ...modules, ...website }).map(([file, doc]) => {
-    const source = file.endsWith('../../../README.md') ? 'site/README.md' : `docs/${file.split('/').pop()}`;
-    const slug = documentRoute(source).slice(5).replace(/\/$/, '') || undefined;
-    return { params: { slug }, props: { doc, source } };
+  // Keys are relative to this file: four levels up is the repository root, three is site/.
+  const modules = import.meta.glob(['../../../../docs/**/*.md', '../../../README.md'], { eager: true });
+  return Object.entries(modules).flatMap(([file, doc]) => {
+    const source = file.startsWith('../../../../') ? file.slice(12) : `site/${file.slice(9)}`;
+    const route = documentRoute(source);
+    if (route === undefined) return [];
+    return [{ params: { slug: route.slice(5).replace(/\/$/, '') || undefined }, props: { doc, source } }];
   });
 }
 const { doc, source } = Astro.props;
-const { Content, getHeadings } = doc;
+const { Content, getHeadings, rawContent } = doc;
 const headings = getHeadings();
-const title = headings.find(heading => heading.depth === 1)?.text ?? 'Documentation';
-const pages = [
-  ['docs/README.md', 'Overview'],
-  ['docs/moduletwo.md', 'ModuleTwo setup'],
-  ['docs/voltbridge.md', 'VoltBridge setup'],
-  ['docs/voltbridge-api.md', 'VoltBridge API'],
-  ['docs/architecture.md', 'Architecture'],
-  ['site/README.md', 'Website development'],
-];
+const labels = Object.fromEntries(navigation.flatMap(([, pages]) => pages));
+const title = source === 'docs/README.md' ? 'Documentation'
+  : labels[source] ?? headings.find(heading => heading.depth === 1)?.text ?? 'Documentation';
 ---
-<SiteLayout title={`${title} · custom-mygrid`} documentation>
+<SiteLayout title={`${title} · custom-mygrid`} description={describe(rawContent(), undefined)} documentation>
   <main id="main" tabindex="-1" class="wrap docs-layout">
     <aside class="docs-sidebar">
       <a href={siteUrl()}>← Back to home</a>
       <nav aria-label="Documentation">
-        {pages.map(([file, label]) => <a href={siteUrl(documentRoute(file))} aria-current={file === source ? 'page' : undefined}>{label}</a>)}
+        <a href={siteUrl('docs/')} aria-current={source === 'docs/README.md' ? 'page' : undefined}>Overview</a>
+        {navigation.map(([group, pages]) => <>
+          <p class="docs-group">{group}</p>
+          {pages.map(([file, label]) => <a href={siteUrl(documentRoute(file))} aria-current={file === source ? 'page' : undefined}>{label}</a>)}
+        </>)}
       </nav>
       {headings.some(h => h.depth === 2) && <details class="toc" open>
         <summary>On this page</summary>
