@@ -28,5 +28,7 @@ TCP port 502 on the development unit. See the [known issue](moduletwo.md#known-i
   the manufacturer's supported local MQTT Discovery interface for both devices.
 - [Website development and publishing](../site/README.md).
 
-Long-form hub content belongs in this directory as Markdown, rendered by GitHub.
-The landing page links here without rendering or duplicating these documents.
+Long-form hub content belongs in this directory as Markdown. Astro renders these
+same files within the [published documentation hub](https://tjorim.github.io/custom-mygrid/docs/).
+Relative Markdown links continue to work on GitHub; the website rewrites them to
+published pages at build time.

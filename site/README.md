@@ -1,31 +1,97 @@
-# custom-mygrid website
+# Website development and publishing
 
-A buildless static landing page. No package manager, remote fonts, analytics or
-JavaScript is required. All page assets are served locally; external links lead
-to the source repositories and GitHub-rendered Markdown documentation.
+The hub uses Astro to build a static landing page and documentation with the
+existing green and cream design. It needs no server runtime, client framework,
+remote fonts or analytics. There are no JavaScript interactions to carry over:
+section links, scrollable tables and native disclosure controls work without JS.
 
-## Preview
+## Local development
 
-From the repository root:
+From the repository root, use Node **24.14.0** (`nvm use`) and npm **10.9.8**.
+Astro and the Markdown processor are pinned in `package.json`; commit changes to
+`package-lock.json` together with dependency changes. CI uses `npm ci`.
 
 ```sh
-python3 scripts/build-site.py
-python3 -m http.server 8080 --directory _site --bind 127.0.0.1
+npm ci
+npm run dev
 ```
 
-Open http://127.0.0.1:8080. The same relative asset paths also work under the
-published `/custom-mygrid/` prefix. The build replaces `_site/`, copies `site/`
-(except this README), shared `assets/`, and the root `LICENSE`, and adds
-`.nojekyll`. Generated output is ignored by Git. Run the build again after edits.
+Open <http://127.0.0.1:4321/custom-mygrid/>. Markdown, layout and CSS edits refresh
+in development. After adding assets, restart the command to copy them again.
+To inspect exactly what will be published:
 
-## Publish
+```sh
+npm run build
+npm test
+npm run preview
+```
+
+Preview uses the same URL and repository prefix. `npm test` validates all output
+pages, internal links, fragments, local assets and legacy redirect targets, and
+runs focused routing tests. The old `python3 scripts/build-site.py` entry point
+now delegates to the Astro build; install dependencies first.
+
+## Project structure
+
+- `site/src/pages/index.astro`: the custom landing page, with its original content.
+- `site/src/layouts/SiteLayout.astro`: shared metadata, skip link, header and footer.
+- `site/src/pages/docs/[...slug].astro`: documentation shell, navigation, table of
+  contents and explicit GitHub source/edit links.
+- `site/src/styles/global.css`: shared design and responsive documentation styles.
+- `docs/*.md`: the canonical setup guides, index, architecture and API reference.
+  These stay in place so existing GitHub links and contributor habits still work.
+- `site/README.md`: this guide, also rendered at `docs/website/`.
+- `site/lib/paths.mjs` and `remark-links.mjs`: shared routing and Markdown URL
+  rewriting, without changing the source Markdown.
+- `scripts/prepare-site.mjs`: copies `assets/`, optional `docs/assets/`, and
+  `LICENSE` into generated `site/public/`, and adds `.nojekyll`.
+- `_site/`: generated static output, ignored together with `site/public/` and
+  Astro's cache. There are no hand-maintained HTML copies of the Markdown.
+
+## Markdown routes and links
+
+`docs/README.md` renders at `/custom-mygrid/docs/`; other `docs/*.md` files render
+at `/custom-mygrid/docs/<filename>/`. The route discovers all Markdown in that
+directory automatically. Add important new pages to the documentation navigation
+in `[...slug].astro`. This contributor guide renders at `docs/website/`.
+
+Astro's Unified Markdown processor supplies GitHub-flavored tables, fenced code
+highlighting and heading IDs. A Remark transform resolves relative links from the
+**source file's directory**, maps Markdown destinations to published routes, and
+preserves query strings and anchors. Markdown links and reference definitions
+share the same transform. Relative images under `assets/` or `docs/assets/` are
+served from those paths within the prefix. Put documentation images in
+`docs/assets/` and reference them as `assets/example.png`; use Markdown image
+syntax so the transform sees them. Links to other repository files use GitHub.
+External URLs, mail links and fragment-only links are left intact. Keep raw HTML
+URLs prefix-aware yourself; they do not pass through the Markdown URL transform.
+
+Existing landing page section IDs and documentation heading IDs remain usable.
+Astro generates static refresh pages for legacy `docs/*.md` paths and
+`site/README.md`, since GitHub Pages cannot issue HTTP redirects. Existing GitHub
+URLs remain valid source links. Guide links on the landing page now open the hub.
+
+## Repository prefix
+
+`site/astro.config.mjs` sets `site: 'https://tjorim.github.io'`, static output and
+trailing slashes. `site/lib/paths.mjs` defines `/custom-mygrid/` once; layouts,
+landing page links, Markdown transforms and compatibility routes all use it.
+Astro prefixes its generated CSS assets. Do not add a second prefix manually.
+For another repository, change the site origin, base and repository URL, then run
+the production build and link checker under that prefix before publishing.
+
+## CI and deployment
 
 In GitHub **Settings → Pages**, choose **GitHub Actions** as the source.
-The Website workflow assembles an artifact for pull requests and deploys only
-from `main`. A manual workflow run on `main` can redeploy it.
-Expected public URL: https://tjorim.github.io/custom-mygrid/.
+The Website workflow installs the pinned Node toolchain, runs `npm ci`, builds
+all pages and validates output for both pull requests and pushes to `main`.
+Its path filters include Markdown, site sources, assets, build scripts, dependency
+manifests and the Node pin. It uploads `_site/` with `upload-pages-artifact` and
+uses the existing Pages deploy job only on `main`; manual runs can redeploy.
+Expected public URL: <https://tjorim.github.io/custom-mygrid/>.
 
-Long-form content lives in `docs/` and is rendered by GitHub, not by this build.
-Keep library documentation in its own repository and link to it. The VoltBridge
-API reference lives in `docs/voltbridge-api.md`; it is linked from the landing
-page and is not copied into the site build.
+This layout is reusable without a shared package or identical branding: preserve
+each project's Markdown locations, derive routes from them, share one page shell,
+centralize the base path, pin dependencies, and verify the prefixed build in PR CI.
+Search is deferred: six documentation pages are readily reachable through the
+navigation and per-page contents list.

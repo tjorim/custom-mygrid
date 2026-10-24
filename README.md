@@ -14,7 +14,7 @@ This project is not affiliated with, endorsed by or supported by MyGrid. Protoco
 | [ha-mygrid-voltbridge](https://github.com/tjorim/ha-mygrid-voltbridge) | HACS custom integration for the VoltBridge (hand-maintained, imports the library from PyPI) |
 | [ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core) | Dormant overlay for a possible Home Assistant core contribution (domain `mygrid`) |
 
-See the [architecture and contributor guide](docs/architecture.md) for source ownership,
+See the [architecture and contributor guide](https://tjorim.github.io/custom-mygrid/docs/architecture/) for source ownership,
 dependency pins, release flow and tooling.
 
 ## Related
@@ -24,12 +24,13 @@ dependency pins, release flow and tooling.
 
 ## Status
 
-The buildless landing page lives in [`site/`](site/README.md) and is published at
+The Astro website renders the landing page and Markdown documentation with shared
+navigation. Website development instructions live in [`site/`](site/README.md) and is published at
 https://tjorim.github.io/custom-mygrid/ after the Pages workflow runs on `main`.
-Start with the [ModuleTwo setup guide](docs/moduletwo.md) or
-[VoltBridge setup guide](docs/voltbridge.md). See the
-[VoltBridge API reference](docs/voltbridge-api.md) and
-[documentation index](docs/README.md) for protocol documentation and repository links.
+Start with the [ModuleTwo setup guide](https://tjorim.github.io/custom-mygrid/docs/moduletwo/) or
+[VoltBridge setup guide](https://tjorim.github.io/custom-mygrid/docs/voltbridge/). See the
+[VoltBridge API reference](https://tjorim.github.io/custom-mygrid/docs/voltbridge-api/) and
+[documentation index](https://tjorim.github.io/custom-mygrid/docs/) for protocol documentation and repository links.
 Work is tracked in the [issues](https://github.com/tjorim/custom-mygrid/issues).
 
 ## License
