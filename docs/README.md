@@ -7,12 +7,12 @@ unofficial project, not affiliated with, endorsed by or supported by MyGrid.
 
 | Device | Home Assistant setup | Python library and protocol documentation |
 | --- | --- | --- |
-| ModuleTwo home battery | [ha-mygrid-modbus](https://github.com/tjorim/ha-mygrid-modbus) | [python-mygrid-modbus](https://github.com/tjorim/python-mygrid-modbus) |
-| VoltBridge P1 meter adapter | [ha-mygrid-voltbridge](https://github.com/tjorim/ha-mygrid-voltbridge) | [python-mygrid-voltbridge](https://github.com/tjorim/python-mygrid-voltbridge) |
+| ModuleTwo home battery | [ModuleTwo installation and setup](moduletwo.md) | [python-mygrid-modbus](https://github.com/tjorim/python-mygrid-modbus) |
+| VoltBridge P1 meter adapter | [VoltBridge installation and setup](voltbridge.md) | [VoltBridge API reference](voltbridge-api.md) · [Python library](https://github.com/tjorim/python-mygrid-voltbridge) |
 
-Library repositories own their documentation; link to it instead of copying it
-here. The planned exception is the VoltBridge API reference, which will move
-here in a separate change. Until then, use the VoltBridge library documentation.
+The setup guides cover HACS installation, configuration, entities, the Energy
+dashboard and troubleshooting. The VoltBridge API reference lives here; library usage and the ModuleTwo
+protocol documentation remain in their source repositories.
 
 ## Development and alternatives
 
