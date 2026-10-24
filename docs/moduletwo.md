@@ -217,7 +217,7 @@ HACS download (or manual directory) and restart to uninstall.
 ## Sources and related guides
 
 These instructions follow the [integration README](https://github.com/tjorim/ha-mygrid-modbus#readme)
-and [canonical integration source](https://github.com/tjorim/ha-mygrid-core/tree/main/homeassistant/components/mygrid).
+and [canonical integration source](https://github.com/tjorim/ha-mygrid-modbus/tree/main/custom_components/mygrid_modbus).
 See the integration's [hardware acceptance checklist](https://github.com/tjorim/ha-mygrid-modbus/blob/main/docs/hardware-testing.md)
 and [protocol reference](https://github.com/tjorim/ha-mygrid-modbus/blob/main/docs/protocol.md)
 for validation and register details, the [VoltBridge setup guide](voltbridge.md)

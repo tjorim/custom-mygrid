@@ -114,7 +114,7 @@ restart to uninstall the integration.
 ## Sources and related guides
 
 These instructions follow the [integration README](https://github.com/tjorim/ha-mygrid-voltbridge#readme),
-[canonical integration source](https://github.com/tjorim/ha-mygrid-core/tree/main/homeassistant/components/mygrid)
+[canonical integration source](https://github.com/tjorim/ha-mygrid-voltbridge/tree/main/custom_components/mygrid_voltbridge)
 and [UDP implementation](https://github.com/tjorim/python-mygrid-voltbridge/blob/main/src/mygrid_voltbridge/udp.py).
 For protocol details, use the [VoltBridge API reference](voltbridge-api.md).
 See also the [ModuleTwo setup guide](moduletwo.md) and [documentation index](README.md).
