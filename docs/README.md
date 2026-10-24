@@ -12,7 +12,13 @@ unofficial project, not affiliated with, endorsed by or supported by MyGrid.
 
 The setup guides cover HACS installation, configuration, entities, the Energy
 dashboard and troubleshooting. The VoltBridge API reference lives here; library usage and the ModuleTwo
-protocol documentation remain in their source repositories.
+protocol documentation remain in their source repositories. The hand-maintained
+HACS repositories own the integration code and tests; Home Assistant installs
+their Python library dependencies from PyPI automatically.
+
+ModuleTwo Modbus is **closed by default**. Expect to need MyGrid support to
+open it for your unit; selecting Home Assistant in the app alone did not open
+TCP port 502 on the development unit. See the [known issue](moduletwo.md#known-issue-port-502-refuses-connections).
 
 ## Development and alternatives
 
