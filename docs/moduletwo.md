@@ -2,16 +2,19 @@
 
 The [MyGrid ModuleTwo integration](https://github.com/tjorim/ha-mygrid-modbus)
 provides local monitoring and explicit power control over Modbus TCP. It needs
-no cloud account or MQTT broker. This is an unofficial community integration,
-with no official Home Assistant quality rating. Physical battery validation is
+no cloud account or MQTT broker for Modbus communication; how Modbus is enabled
+is still being clarified with MyGrid (see below). This is an unofficial community
+integration, with no official Home Assistant quality rating. Physical battery validation is
 pending; it targets **Modbus register map version 2**.
 
 ## Before you start
 
 - Run **Home Assistant 2026.10.2 or newer** (Python 3.14.2+). The HACS package
   includes its library; no separate Python package installation is needed.
-- In the MyGrid app, set the battery's **control source to Home Assistant**.
-  The MyGrid control source leaves the Modbus port closed.
+- In the **MyGrid v2 app**, set the battery's **control source to Home Assistant**.
+  The manufacturer's Modbus manual says this opens the port, and that the
+  MyGrid control source leaves it closed. Home Assistant appears as a choice
+  only when it has been configured for that battery.
 - Use the **Auto cluster leader**, never a Follow unit. Leader setpoints and live
   limits represent household totals. One configured leader creates one device;
   the protocol does not enumerate followers.
@@ -26,12 +29,77 @@ pending; it targets **Modbus register map version 2**.
 - Choose **one power controller**. App controls, automations and other writers
   can overwrite the shared setpoint; the last write wins.
 
-**Known port-502 issue:** the integration README reports a unit whose port stayed
-closed despite selecting Home Assistant as the control source (2026-10-24).
-MyGrid support confirmed the port is closed by default and said they would ask
-their IT team to open it (no timeline given). Until MyGrid says otherwise,
-expect to contact MyGrid support with the battery's hostname and MAC address
-and ask them to enable Modbus TCP. The integration cannot open a closed device port.
+## Known issue: port 502 refuses connections
+
+As of **2026-10-24**, following MyGrid's Modbus manual and selecting Home
+Assistant as the control source in the MyGrid v2 app did not open TCP port 502
+on the development unit. MyGrid support replied that **Modbus should be allowed
+by default** and that they would ask their IT team to enable it. Hardware
+validation remains pending while the port refuses connections.
+
+If the app setting is correct and port 502 still refuses connections, contact
+[MyGrid support](mailto:support@mygrid.energy) and ask them to **enable Modbus TCP
+for the battery**. The integration cannot open a closed device port. This is an
+observed issue on the development unit, not a claim that every battery requires
+support intervention; the manual describes the app setting as opening the port.
+
+### Open questions for MyGrid
+
+These questions remain unanswered as of **2026-10-24**:
+
+- What exactly does the IT team change to enable Modbus TCP?
+- Which firmware version provides Modbus, and which version is the development
+  unit running?
+- Is the control-source setting stored on the battery or checked against MyGrid's
+  cloud?
+- Once enabled, does port 502 stay open without internet access? After it works,
+  test by blocking the battery's internet access at the router while preserving
+  LAN access, then retry a read-only Modbus connection.
+- Is there a local-only way to enable Modbus TCP?
+- Do Modbus and MQTT's **Home Assistant control** share one setting? Does enabling
+  Modbus require the Home Assistant/MQTT configuration described below?
+
+If enabling Modbus depends on MyGrid's cloud, users could lose the ability to
+**enable** it if the company or its cloud disappears. This is an unresolved
+risk, not evidence that an already enabled local Modbus connection needs internet.
+
+Track answers and test results in [issue #5](https://github.com/tjorim/custom-mygrid/issues/5).
+When MyGrid answers, update this page together with the
+[library README](https://github.com/tjorim/python-mygrid-modbus#readme),
+[HACS README](https://github.com/tjorim/ha-mygrid-modbus#readme) and
+[draft Home Assistant documentation](https://github.com/tjorim/ha-mygrid-core/blob/main/documentation/home-assistant.io/source/_integrations/mygrid.markdown),
+keeping confirmed behavior separate from untested hypotheses.
+
+### Manufacturer-supported MQTT alternative
+
+MyGrid documents a separate [local MQTT integration for ModuleTwo](https://github.com/MyGrid-Energy/mygrid-homeassistant-mqtt/tree/main/moduletwo).
+Configure a local broker under **Features → Home Assistant** in the app. For
+ModuleTwo, **Enable Home Assistant** is diagnostics only; after **Connected**,
+choose **Home Assistant control** in the **Control** tab to allow power control.
+Follow MyGrid's [setup guide](https://github.com/MyGrid-Energy/mygrid-homeassistant-mqtt/blob/main/moduletwo/setup.md)
+for that route, which requires a local MQTT broker.
+
+Those MQTT instructions do not document Modbus. Configuring a local broker and
+then retrying port 502 is an **untested diagnostic hypothesis**, not a confirmed
+Modbus prerequisite or fix. Whether MQTT configuration or a different firmware
+version affects Modbus availability still needs MyGrid's confirmation.
+
+## Register map version 2
+
+The map contains 18 holding registers at zero-based addresses **0–17**, read
+with function **03** over TCP port **502**, unit ID **1**. It covers map version,
+state of charge, power setpoint and live limits, measured power, status and fault
+flags, restart, stored energy, lifetime charged/discharged energy and capacity.
+Only the power setpoint and restart registers are writable; the library uses
+function **06** for single-register writes. Positive power charges and negative
+power discharges; setpoints and limits use 100 W steps, measured power uses W,
+and energy uses Wh. Two-register values use the low word first.
+
+Use the library's [protocol reference](https://github.com/tjorim/python-mygrid-modbus/blob/main/docs/protocol.md)
+for addresses, scaling and fault definitions, and its copy of the
+[MyGrid Modbus TCP manual](https://github.com/tjorim/python-mygrid-modbus/blob/main/docs/mygrid-modbus-tcp-manual-en.md)
+for the manufacturer specification. The full register table stays there to avoid
+drifting copies. This integration supports map **2** only.
 
 ## Install with HACS
 
