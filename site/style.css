@@ -242,12 +242,11 @@ footer {
   h1 {
     letter-spacing:-.055em
   }
-  
+
 }
 @media(prefers-reduced-motion:reduce) {
   :root {
     scroll-behavior:auto
   }
-  
-}
 
+}
