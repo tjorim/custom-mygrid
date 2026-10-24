@@ -16,8 +16,8 @@ protocol documentation remain in their source repositories.
 
 ## Development and alternatives
 
-- [ha-mygrid-core](https://github.com/tjorim/ha-mygrid-core): integration source
-  and the generator for the two HACS repositories.
+- [Architecture and contributor guide](architecture.md): library and HACS source
+  ownership, the dormant core overlay, release flow and tooling.
 - [MyGrid's MQTT integration](https://github.com/MyGrid-Energy/mygrid-homeassistant-mqtt):
   the manufacturer's supported local MQTT Discovery interface for both devices.
 - [Website development and publishing](../site/README.md).
