@@ -28,10 +28,10 @@ pending; it targets **Modbus register map version 2**.
 
 **Known port-502 issue:** the integration README reports a unit whose port stayed
 closed despite selecting Home Assistant as the control source (2026-10-24).
-MyGrid support said Modbus should be allowed by default and referred enablement
-to their IT team. If the correct settings still produce a refused connection,
-contact MyGrid support with the battery's hostname and MAC address and ask them
-to enable Modbus TCP. The integration cannot open a closed device port.
+MyGrid support confirmed the port is closed by default and said they would ask
+their IT team to open it (no timeline given). Until MyGrid says otherwise,
+expect to contact MyGrid support with the battery's hostname and MAC address
+and ask them to enable Modbus TCP. The integration cannot open a closed device port.
 
 ## Install with HACS
 
