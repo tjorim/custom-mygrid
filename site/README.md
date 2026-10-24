@@ -27,4 +27,5 @@ Expected public URL: https://tjorim.github.io/custom-mygrid/.
 
 Long-form content lives in `docs/` and is rendered by GitHub, not by this build.
 Keep library documentation in its own repository and link to it. The VoltBridge
-API reference will move to this hub separately; it is not copied by this scaffold.
+API reference lives in `docs/voltbridge-api.md`; it is linked from the landing
+page and is not copied into the site build.
