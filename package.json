@@ -10,7 +10,7 @@
     "dev": "node scripts/prepare-site.mjs && astro dev --root site --host 127.0.0.1",
     "build": "node scripts/sync-upstream.mjs && node scripts/prepare-site.mjs && astro build --root site",
     "preview": "astro preview --root site --host 127.0.0.1",
-    "test": "node --test scripts/site-links.test.mjs",
+    "test": "node --test scripts/site-links.test.mjs scripts/snapshot-files.test.mjs",
     "check:site": "python3 scripts/check-site.py",
     "docs:update": "node scripts/sync-upstream.mjs --update",
     "docs:verify": "node scripts/sync-upstream.mjs"

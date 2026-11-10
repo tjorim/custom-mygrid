@@ -117,7 +117,10 @@ project architecture here. Link to detailed guides instead of repeating them.
 
 `upstream/sources.json` maps authoritative files to stable website routes and
 pins each repository to a full commit SHA. `upstream/` contains exact, checked-in
-snapshots, not independently maintained copies. Do not edit those Markdown files:
+snapshots, not independently maintained copies. Updates stage all snapshots and
+the manifest together before replacing the live directory. A promotion failure
+restores the old set; if restoration fails too, the error reports a preserved
+backup directory for manual recovery. Do not edit those Markdown files:
 edit their upstream source, then run `pnpm docs:update`. Build-time SHA-256 checks
 reject accidental snapshot edits. Normal builds require no upstream network access.
 

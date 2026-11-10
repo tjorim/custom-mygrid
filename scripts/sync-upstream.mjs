@@ -1,5 +1,6 @@
 // Refresh snapshots only on explicit request; normal builds verify offline.
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
+import { writeSnapshotSet } from './snapshot-files.mjs';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 const root = new URL('../', import.meta.url);
@@ -24,14 +25,13 @@ for (const repo of manifest.sources) {
   for (const page of [...repo.pages, ...(repo.files ?? [])]) {
     const file = new URL(`upstream/${repo.repository.split('/')[1]}/${page.path}`, root);
     const data = update ? Buffer.from(await (await fetchChecked(`https://raw.githubusercontent.com/${repo.repository}/${repo.revision}/${page.path}`)).arrayBuffer()) : await readFile(file);
-    if (update) { page.sha256 = digest(data); downloads.push({ file, data }); }
+    if (update) { page.sha256 = digest(data); downloads.push({ path: `${repo.repository.split('/')[1]}/${page.path}`, data }); }
     else if (digest(data) !== page.sha256) throw new Error(`Snapshot modified: ${fileURLToPath(file)}. Edit the upstream source and run pnpm docs:update.`);
   }
 }
-// Fetch everything successfully before replacing any snapshots.
-for (const { file, data } of downloads) {
-  await mkdir(new URL('.', file), { recursive: true });
-  await writeFile(file, data);
+// Stage all downloads and the manifest together, then promote with rollback.
+if (update) {
+  downloads.push({ path: 'sources.json', data: JSON.stringify(manifest, null, 2) + '\n' });
+  await writeSnapshotSet(new URL('upstream/', root), downloads);
 }
-if (update) await writeFile(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
 console.log(`${update ? 'Updated' : 'Verified'} ${manifest.sources.length} pinned documentation repositories.`);
