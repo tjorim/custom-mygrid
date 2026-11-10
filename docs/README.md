@@ -7,29 +7,31 @@ unofficial project, not affiliated with, endorsed by or supported by MyGrid.
 
 | Device | Home Assistant setup | Python library and protocol documentation |
 | --- | --- | --- |
-| ModuleTwo home battery | [ModuleTwo installation and setup](moduletwo.md) | [python-mygrid-modbus](https://github.com/tjorim/python-mygrid-modbus) |
-| VoltBridge P1 meter adapter | [VoltBridge installation and setup](voltbridge.md) | [VoltBridge API reference](voltbridge-api.md) · [Python library](https://github.com/tjorim/python-mygrid-voltbridge) |
+| ModuleTwo home battery | [ModuleTwo installation and setup](moduletwo.md) | [Python library](https://tjorim.github.io/custom-mygrid/docs/moduletwo-python/) · [Protocol reference](https://tjorim.github.io/custom-mygrid/docs/moduletwo-protocol/) |
+| VoltBridge P1 meter adapter | [VoltBridge installation and setup](voltbridge.md) | [VoltBridge API reference](voltbridge-api.md) · [Python library](https://tjorim.github.io/custom-mygrid/docs/voltbridge-python/) |
 
-The setup guides cover HACS installation, configuration, entities, the Energy
-dashboard and troubleshooting. The VoltBridge API reference lives here; library usage and the ModuleTwo
-protocol documentation remain in their source repositories. The hand-maintained
-HACS repositories own the integration code and tests; Home Assistant installs
-their Python library dependencies from PyPI automatically.
+The setup guides cover Marketplace installation (or HACS on Home Assistant
+2026.10), configuration, entities, the Energy dashboard, examples and
+troubleshooting. The website publishes these guides and the Python/protocol
+references from their owning repositories. Each page links to the exact source
+revision and the upstream editing location. Home Assistant installs the Python
+library dependencies from PyPI automatically.
 
 ModuleTwo read-only library tests and partial Home Assistant hardware acceptance
 passed on **2026-11-09**. Link the battery to your MyGrid account and select
-Home Assistant control to enable Modbus. See the [setup guide](moduletwo.md#hardware-validation-and-remaining-questions)
+Home Assistant control to enable Modbus. See the [acceptance record](https://tjorim.github.io/custom-mygrid/docs/moduletwo-acceptance/)
 for the tested behavior and remaining limits.
 
 ## Development and alternatives
 
-- [Architecture and contributor guide](architecture.md): library and HACS source
+- [Architecture and contributor guide](architecture.md): library and integration source
   ownership, the dormant core overlay, release flow and tooling.
 - [MyGrid's MQTT integration](https://github.com/MyGrid-Energy/mygrid-homeassistant-mqtt):
   the manufacturer's supported local MQTT Discovery interface for both devices.
 - [Website development and publishing](../site/README.md).
 
-Long-form hub content belongs in this directory as Markdown. Astro renders these
-same files within the [published documentation hub](https://tjorim.github.io/custom-mygrid/docs/).
-Relative Markdown links continue to work on GitHub; the website rewrites them to
-published pages at build time.
+Cross-device introductions, navigation and architecture belong in this hub.
+Maintain detailed HA guides in the integration repositories and Python/protocol
+references in the libraries. The website imports reviewed, commit-pinned
+snapshots; do not edit a second copy here. See the
+[publishing guide](../site/README.md#upstream-documentation-ownership) for updates.

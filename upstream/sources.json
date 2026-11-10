@@ -3,14 +3,14 @@
   "sources": [
     {
       "repository": "tjorim/ha-mygrid-modbus",
-      "revision": "1d323c9775f7725bad43245ec831ff10f2ed8b0a",
+      "revision": "da8ae8014211ec192830706a298df5a9730a0837",
       "branch": "main",
       "pages": [
         {
           "path": "README.md",
           "source": "docs/moduletwo.md",
           "title": "ModuleTwo setup",
-          "sha256": "19f6a0ae3f73ea8472bf30e9650da963714837414bf334fd45eb4ba3fbb1ae85"
+          "sha256": "15167686af4503333463ff6dda670933aa5f4531ab278ed29302038d37f32eff"
         },
         {
           "path": "docs/hardware-acceptance.md",
@@ -28,14 +28,14 @@
     },
     {
       "repository": "tjorim/ha-mygrid-voltbridge",
-      "revision": "fe512ce23087661c3a0ac37d5bf6b21abd8610ea",
+      "revision": "9db889f628d69134fccfa0232339747ff52203aa",
       "branch": "main",
       "pages": [
         {
           "path": "README.md",
           "source": "docs/voltbridge.md",
           "title": "VoltBridge setup",
-          "sha256": "12d186aa3888b1480c11e4c0e31c9055ede7f99538559cc3396807627d33825f"
+          "sha256": "5dd4bcadf550d468fedc63f08d44b9ab62550f86ca57d3e8b2d414505fb8e0a5"
         }
       ],
       "files": [
@@ -47,14 +47,14 @@
     },
     {
       "repository": "tjorim/python-mygrid-modbus",
-      "revision": "9bd70a79707332c806af5be96ba8e18600e4cefd",
+      "revision": "6178b31b03c0f82f5f22849b959dcdcd7d2cc486",
       "branch": "main",
       "pages": [
         {
           "path": "README.md",
           "source": "docs/moduletwo-python.md",
           "title": "ModuleTwo Python library",
-          "sha256": "63549778694f047c56617a84fffa117c319834c71e8798e4199b337100e9b18e"
+          "sha256": "b618a94e775903b9452ada3c51b8ada6d3835da883f8505f1cae70b9e1445e8a"
         },
         {
           "path": "docs/protocol.md",
@@ -78,14 +78,20 @@
     },
     {
       "repository": "tjorim/python-mygrid-voltbridge",
-      "revision": "f3adadcf40e7d4e1ce85c4035aa1a466fe490253",
+      "revision": "058938abced22e1913dc0d84ae90d4cfdd47a2c8",
       "branch": "main",
       "pages": [
         {
           "path": "README.md",
           "source": "docs/voltbridge-python.md",
           "title": "VoltBridge Python library",
-          "sha256": "d0ee7fc4eb9a17de09ca66f642543686bf01d3e7471ef35797cc9c4b674bed9b"
+          "sha256": "d13502961c702a72eb86049b5dfedb3cc5086018507cf25e61af2c77660956f9"
+        },
+        {
+          "path": "docs/api.md",
+          "source": "docs/voltbridge-api.md",
+          "title": "VoltBridge API",
+          "sha256": "96afc86ed26d587a7e5ebc8cf77e1143fd75263610cd7a297a198f9bfe37170b"
         }
       ],
       "files": [

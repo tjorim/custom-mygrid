@@ -141,5 +141,7 @@ the website; other files link to the pinned upstream commit. Relative images use
 commit-pinned raw GitHub URLs; external badges retain their original URLs.
 Existing ModuleTwo and VoltBridge setup URLs are preserved. Their local `docs/`
 files are pointers for GitHub readers and are replaced by upstream content when
-rendering the website. The VoltBridge API reference remains hub-owned until an
-authoritative upstream replacement exists.
+rendering the website. The VoltBridge API reference is imported from the Python
+library at the existing `docs/voltbridge-api/` URL. Integration READMEs remain complete setup
+guides for GitHub and Marketplace. Marketplace exclusion comments hide only
+installation and contributor sections there; the website renders the full guide.

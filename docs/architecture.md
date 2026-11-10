@@ -1,8 +1,8 @@
 # Architecture and contributor guide
 
-The project focuses on two Python device libraries and two hand-maintained HACS
+The project focuses on two Python device libraries and two hand-maintained custom
 integrations. Make protocol changes in the library for the device, and Home
-Assistant behavior changes in its HACS repository.
+Assistant behavior changes in its integration repository.
 
 ## Libraries own the device interface
 
@@ -17,7 +17,7 @@ These libraries own device communication and protocol decoding. The
 `python-mygrid-*` names are repository names only; use the `mygrid-*` package
 names when declaring dependencies.
 
-## HACS repositories own the integrations
+## Custom integration repositories own the HA guides and behavior
 
 - [ha-mygrid-modbus](https://github.com/tjorim/ha-mygrid-modbus) owns the ModuleTwo
   integration, domain `mygrid_modbus`.
@@ -30,7 +30,7 @@ version pin lives in both the integration's `manifest.json` and the `dev`
 dependency group in `pyproject.toml`; `scripts/validate_metadata.py` fails if
 those pins differ.
 
-HACS allows one integration (one domain) per repository, so each device has its
+Marketplace and HACS allow one integration (one domain) per repository, so each device has its
 own HACS repository. The naming convention is `ha-mygrid-<library>`, such as
 `ha-mygrid-modbus` for `mygrid-modbus`.
 

@@ -2,8 +2,21 @@
 
 ## Documentation
 
-See the [MyGrid documentation hub](https://github.com/tjorim/custom-mygrid#readme)
-for device setup guides, protocol references and repository links.
+Read the [complete ModuleTwo setup guide](https://tjorim.github.io/custom-mygrid/docs/moduletwo/)
+on the MyGrid documentation website, alongside the other device guides.
+
+<!-- ha-marketplace:exclude-start -->
+This README is the authoritative source for this integration's installation,
+configuration, entities, Energy dashboard setup, automation examples and
+troubleshooting. Edit those instructions here; the website publishes a reviewed,
+commit-pinned snapshot, so it may lag this branch. Integration acceptance and
+release instructions belong in this repository's `docs/` directory.
+
+Python usage, device prerequisites and protocol details belong in
+[`python-mygrid-modbus`](https://github.com/tjorim/python-mygrid-modbus). Link to that
+source rather than copying its reference tables. Contributor guidance lives in
+[CONTRIBUTING.md](CONTRIBUTING.md).
+<!-- ha-marketplace:exclude-end -->
 
 Local monitoring and explicit power control for **MyGrid ModuleTwo** batteries over Modbus TCP. No cloud service or account is used by the integration.
 
@@ -23,15 +36,29 @@ This is a community custom integration, engineered against applicable Home Assis
 
 The protocol has no TLS or authentication. Keep it on your trusted LAN; do not forward port 502 to the internet.
 
+<!-- ha-marketplace:exclude-start -->
+
 ## Installation
 
-[![Open your Home Assistant instance and open this repository in HACS or the Marketplace.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=tjorim&repository=ha-mygrid-modbus&category=integration)
+On **Home Assistant 2026.11 or newer**, open **Settings → Marketplace** and add
+`https://github.com/tjorim/ha-mygrid-modbus` as a custom repository of type
+**Integration**. Install **MyGrid ModuleTwo** and follow any restart prompt.
+Catalog listing is separate from custom-repository installation.
 
-### Manual installation
+On **Home Assistant 2026.10**, use **HACS → Custom repositories**, add the same
+URL as an **Integration**, download it and restart Home Assistant.
 
-The complete package is ready for manual testing now. Build or use `dist/mygrid-modbus-0.1.0.zip`, extract it into the Home Assistant configuration directory, and restart. Home Assistant installs the `mygrid-modbus` library from PyPI on first start, so the host needs network access.
+[Open this repository in the Marketplace](https://my.home-assistant.io/redirect/marketplace_repository/?owner=tjorim&repository=ha-mygrid-modbus&category=integration).
 
-Copy the entire `custom_components/mygrid_modbus` directory into your Home Assistant configuration directory as `custom_components/mygrid_modbus`, then restart Home Assistant.
+For manual installation, copy the entire `custom_components/mygrid_modbus`
+directory into `<config>/custom_components/mygrid_modbus` and restart Home Assistant.
+Home Assistant installs the Python library from PyPI; network access is required
+for its first installation.
+
+See [release instructions](docs/releasing.md) for manual-install ZIPs and publishing.
+<!-- ha-marketplace:exclude-end -->
+
+## Configuration
 
 Open **Settings → Devices & services → Add integration → MyGrid ModuleTwo**. Enter:
 
@@ -42,13 +69,7 @@ Open **Settings → Devices & services → Add integration → MyGrid ModuleTwo*
 
 Unit ID is fixed to the documented value **1**. Setup reads the device and verifies its register map before creating the entry. No commands are sent during setup.
 
-### HACS
-
-In HACS open **Custom repositories**, add `https://github.com/tjorim/ha-mygrid-modbus`, choose **Integration**, then download **MyGrid ModuleTwo** and restart Home Assistant. Add MyGrid through Devices & services as above. Catalog listing is separate from custom-repository installation; see [release instructions](docs/releasing.md).
-
-After installation, start setup directly:
-
-[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=mygrid_modbus)
+After installation, [start setup in Home Assistant](https://my.home-assistant.io/redirect/config_flow_start/?domain=mygrid_modbus).
 
 ## Entities
 
@@ -157,6 +178,8 @@ Download diagnostics from the integration menu. Diagnostics include decoded tele
 
 Remove the integration under Devices & services to stop polling and release its connection hold. Home Assistant closes the physical connection when its last consumer releases it. Removal does not send a zero setpoint. Remove the HACS download (or local directory) and restart Home Assistant to uninstall it. Existing recorder history follows Home Assistant's normal retention settings.
 
+<!-- ha-marketplace:exclude-start -->
+
 ## Development
 
 This is the community-testing integration for the ModuleTwo. HACS allows one integration per repository, so each MyGrid device has its own HACS repository. This repository is the source of truth for its integration code and tests; the device library is a separate PyPI package.
@@ -187,3 +210,5 @@ Change integration code and tests here. Change device or protocol behavior in th
 The library tests models with the supplied mock fixtures and both actual transport backends. This package tests the integration wiring, shared sockets, energy-counter restoration and raw diagnostics. Neither controls real hardware. See [architecture](docs/architecture.md), [hardware testing](docs/hardware-testing.md), and [release instructions](docs/releasing.md).
 
 To try the integration in a real Home Assistant, run `scripts/develop`: it starts Home Assistant with the component importable from this checkout and a configuration in `config/` (ignored by git). The first start installs the default integrations' requirements and needs network access; then open http://localhost:8123.
+
+<!-- ha-marketplace:exclude-end -->

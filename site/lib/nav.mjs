@@ -10,7 +10,7 @@ export const navigation = [
     ['docs/voltbridge-api.md', 'VoltBridge API'],
     ['docs/architecture.md', 'Architecture'],
   ]],
-  ['Upstream guides', importedPages.filter(page => !['docs/moduletwo.md', 'docs/voltbridge.md'].includes(page.source)).map(page => [page.source, page.title])],
+  ['Upstream guides', importedPages.filter(page => !['docs/moduletwo.md', 'docs/voltbridge.md', 'docs/voltbridge-api.md'].includes(page.source)).map(page => [page.source, page.title])],
   ['Project', [
     ['site/README.md', 'Website development'],
   ]],
