@@ -45,7 +45,7 @@ On **Home Assistant 2026.11 or newer**, open **Settings → Marketplace** and ad
 **Integration**. Install **MyGrid ModuleTwo** and follow any restart prompt.
 Catalog listing is separate from custom-repository installation.
 
-On **Home Assistant 2026.10**, use **HACS → Custom repositories**, add the same
+On **Home Assistant 2026.10.2 or newer in the 2026.10 series**, use **HACS → Custom repositories**, add the same
 URL as an **Integration**, download it and restart Home Assistant.
 
 [Open this repository in the Marketplace](https://my.home-assistant.io/redirect/marketplace_repository/?owner=tjorim&repository=ha-mygrid-modbus&category=integration).
@@ -174,9 +174,14 @@ Fault alerts can use the Problem entity as a state trigger. Status `telemetry_st
 | Unavailable | Device or network is offline; polling will reconnect without replaying commands |
 | Restart command not confirmed | Firmware may have restarted before replying; check availability before retrying manually |
 
-Download diagnostics from the integration menu. Diagnostics include decoded telemetry, update-report status and a fresh, replayable raw-register dump, with network addresses and entry identifiers omitted. An offline device reports the failure type without exposing raw exception text; an unloaded entry reports `NotLoaded`. The dump may reveal household energy usage. Diagnostic reads never issue commands.
+Download diagnostics from the integration menu. Diagnostics include decoded telemetry, update-report status and a fresh, replayable raw-register dump, with network addresses and entry identifiers omitted from the integration
+payload. The complete Home Assistant download can also contain wrapper data,
+other integrations and setup-time entry IDs: review the entire file before sharing. An offline device reports the failure type without exposing raw exception text; an unloaded entry reports `NotLoaded`. The dump may reveal household energy usage. Diagnostic reads never issue commands.
 
-Remove the integration under Devices & services to stop polling and release its connection hold. Home Assistant closes the physical connection when its last consumer releases it. Removal does not send a zero setpoint. Remove the HACS download (or local directory) and restart Home Assistant to uninstall it. Existing recorder history follows Home Assistant's normal retention settings.
+Remove the integration under Devices & services to stop polling and release its connection hold. Home Assistant closes the physical connection when its last consumer releases it. Removal does not send a zero setpoint. On Home Assistant 2026.11 or newer, open this repository under **Settings →
+Marketplace**, select **⋮ → Uninstall**, and follow any restart prompt. On
+Home Assistant 2026.10.2–2026.10.x, remove the HACS download and restart. For a
+manual installation, remove the local directory and restart. Existing recorder history follows Home Assistant's normal retention settings.
 
 <!-- ha-marketplace:exclude-start -->
 

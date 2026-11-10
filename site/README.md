@@ -122,7 +122,10 @@ edit their upstream source, then run `pnpm docs:update`. Build-time SHA-256 chec
 reject accidental snapshot edits. Normal builds require no upstream network access.
 
 The weekly **Update upstream documentation** workflow (also manually runnable)
-refreshes pins and snapshots, validates the site, and opens or updates one PR.
+refreshes pins and snapshots and validates the site in a read-only job with
+checkout credentials disabled. A separate publishing job downloads the validated
+snapshot artifact and opens or updates one PR; dependency installation and site
+processing never run with the write token.
 Enable **Allow GitHub Actions to create and approve pull requests** in repository
 Actions settings for automatic PR creation. Review that PR before merging; no
 upstream changes are published automatically. If validation fails, no update PR

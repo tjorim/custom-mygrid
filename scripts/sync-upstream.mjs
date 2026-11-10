@@ -9,7 +9,12 @@ const update = process.argv.includes('--update');
 const digest = data => createHash('sha256').update(data).digest('hex');
 async function fetchChecked(url) {
   const response = await fetch(url, { headers: process.env.GH_TOKEN && url.startsWith('https://api.github.com/') ? { Authorization: `Bearer ${process.env.GH_TOKEN}` } : {} });
-  if (!response.ok) throw new Error(`${url}: ${response.status}`);
+  if (!response.ok) {
+    const hint = !process.env.GH_TOKEN && url.startsWith('https://api.github.com/')
+      && [403, 429].includes(response.status)
+      ? ' GitHub may have rate-limited this request; set GH_TOKEN for authenticated access.' : '';
+    throw new Error(`${url}: ${response.status}.${hint}`);
+  }
   return response;
 }
 const downloads = [];
