@@ -1,0 +1,46 @@
+name: Update upstream documentation
+on:
+  schedule:
+    - cron: '23 6 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: upstream-documentation
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm docs:update
+        env:
+          GH_TOKEN: ${{ github.token }}
+      # GITHUB_TOKEN-created PRs do not trigger other workflows. Validate here.
+      - run: pnpm test && pnpm run build && pnpm run check:site
+      - name: Propose reviewed snapshot update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- upstream; then exit 0; fi
+          branch=automation/upstream-documentation
+          git checkout -B "$branch"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add upstream
+          git commit -m 'docs: refresh pinned upstream guides'
+          # Populate the lease for an existing automation branch on fresh runners.
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            git fetch origin "$branch:refs/remotes/origin/$branch"
+          fi
+          git push --force-with-lease origin "$branch"
+          if ! gh pr list --head "$branch" --state open --json number --jq '.[].number' | rg -q .; then
+            gh pr create --base main --head "$branch" --title 'docs: refresh pinned upstream guides' --body-file .github/upstream-docs-pr.md
+          fi

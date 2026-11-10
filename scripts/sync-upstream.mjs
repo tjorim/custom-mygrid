@@ -1,0 +1,32 @@
+// Refresh snapshots only on explicit request; normal builds verify offline.
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { fileURLToPath } from 'node:url';
+const root = new URL('../', import.meta.url);
+const manifestFile = new URL('upstream/sources.json', root);
+const manifest = JSON.parse(await readFile(manifestFile, 'utf8'));
+const update = process.argv.includes('--update');
+const digest = data => createHash('sha256').update(data).digest('hex');
+async function fetchChecked(url) {
+  const response = await fetch(url, { headers: process.env.GH_TOKEN && url.startsWith('https://api.github.com/') ? { Authorization: `Bearer ${process.env.GH_TOKEN}` } : {} });
+  if (!response.ok) throw new Error(`${url}: ${response.status}`);
+  return response;
+}
+const downloads = [];
+for (const repo of manifest.sources) {
+  if (update) repo.revision = (await (await fetchChecked(`https://api.github.com/repos/${repo.repository}/commits/${repo.branch}`)).json()).sha;
+  if (!/^[a-f0-9]{40}$/.test(repo.revision)) throw new Error(`Invalid revision: ${repo.repository}`);
+  for (const page of [...repo.pages, ...(repo.files ?? [])]) {
+    const file = new URL(`upstream/${repo.repository.split('/')[1]}/${page.path}`, root);
+    const data = update ? Buffer.from(await (await fetchChecked(`https://raw.githubusercontent.com/${repo.repository}/${repo.revision}/${page.path}`)).arrayBuffer()) : await readFile(file);
+    if (update) { page.sha256 = digest(data); downloads.push({ file, data }); }
+    else if (digest(data) !== page.sha256) throw new Error(`Snapshot modified: ${fileURLToPath(file)}. Edit the upstream source and run pnpm docs:update.`);
+  }
+}
+// Fetch everything successfully before replacing any snapshots.
+for (const { file, data } of downloads) {
+  await mkdir(new URL('.', file), { recursive: true });
+  await writeFile(file, data);
+}
+if (update) await writeFile(manifestFile, JSON.stringify(manifest, null, 2) + '\n');
+console.log(`${update ? 'Updated' : 'Verified'} ${manifest.sources.length} pinned documentation repositories.`);

@@ -54,7 +54,12 @@ entries would not migrate to a core entry because the domains differ.
    `manifest.json` and the `dev` dependency group of `pyproject.toml`, then run
    `uv lock` to update the lockfile.
 4. Run metadata validation and the repository's checks, then release the HACS
-   integration.
+   integration. Both HACS repositories build versioned manual-install ZIPs;
+   release tags must exactly match the integration manifest version (for example,
+   `0.1.0`). Custom-repository installation does not imply Marketplace catalog
+   listing. Follow each repository's release instructions:
+   [ModuleTwo](https://github.com/tjorim/ha-mygrid-modbus/blob/main/docs/releasing.md)
+   and [VoltBridge](https://github.com/tjorim/ha-mygrid-voltbridge/blob/main/docs/releasing.md).
 
 ## Contributor tooling
 
@@ -64,9 +69,9 @@ Integration tests use `pytest-homeassistant-custom-component`.
 
 Live tests are selected with `-m live`; provide `VOLTBRIDGE_HOST` for VoltBridge
 or `MYGRID_HOST` for ModuleTwo. Follow the target repository's test instructions
-and hardware requirements before running them. ModuleTwo still needs hardware
-validation; see the [setup guide](moduletwo.md) and its linked acceptance
-checklist.
+and hardware requirements before running them. ModuleTwo read-only library tests and partial integration acceptance passed on
+2026-11-09; see the [setup guide](moduletwo.md) and its linked acceptance record
+for remaining checks.
 
 ## Website tooling
 
@@ -87,3 +92,15 @@ overlay described above. Historical generator and vendoring references describe
 the earlier model.
 
 See the [documentation index](README.md) for device setup and protocol guides.
+
+## Documentation ownership
+
+The hub renders authoritative integration and library Markdown from pinned
+upstream snapshots. HA setup, configuration, entities and automation examples
+belong in their integration repository; Python usage, protocol references and
+library validation belong in their library repository. This repository owns
+cross-device introductions, navigation and architecture. Edit each topic in its
+owning repository rather than maintaining a second guide here.
+
+See [upstream documentation publishing](../site/README.md#upstream-documentation-ownership)
+for the source manifest, update PR workflow and link handling.

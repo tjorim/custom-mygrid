@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "repository": "tjorim/ha-mygrid-modbus",
+      "revision": "1d323c9775f7725bad43245ec831ff10f2ed8b0a",
+      "branch": "main",
+      "pages": [
+        {
+          "path": "README.md",
+          "source": "docs/moduletwo.md",
+          "title": "ModuleTwo setup",
+          "sha256": "19f6a0ae3f73ea8472bf30e9650da963714837414bf334fd45eb4ba3fbb1ae85"
+        },
+        {
+          "path": "docs/hardware-acceptance.md",
+          "source": "docs/moduletwo-acceptance.md",
+          "title": "ModuleTwo acceptance",
+          "sha256": "be2045ea53b5fcdb10f5ee2a259cc0f9209c888d483b414df1fc7ef18b0cd6be"
+        }
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ]
+    },
+    {
+      "repository": "tjorim/ha-mygrid-voltbridge",
+      "revision": "fe512ce23087661c3a0ac37d5bf6b21abd8610ea",
+      "branch": "main",
+      "pages": [
+        {
+          "path": "README.md",
+          "source": "docs/voltbridge.md",
+          "title": "VoltBridge setup",
+          "sha256": "12d186aa3888b1480c11e4c0e31c9055ede7f99538559cc3396807627d33825f"
+        }
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ]
+    },
+    {
+      "repository": "tjorim/python-mygrid-modbus",
+      "revision": "9bd70a79707332c806af5be96ba8e18600e4cefd",
+      "branch": "main",
+      "pages": [
+        {
+          "path": "README.md",
+          "source": "docs/moduletwo-python.md",
+          "title": "ModuleTwo Python library",
+          "sha256": "63549778694f047c56617a84fffa117c319834c71e8798e4199b337100e9b18e"
+        },
+        {
+          "path": "docs/protocol.md",
+          "source": "docs/moduletwo-protocol.md",
+          "title": "ModuleTwo protocol",
+          "sha256": "5a667c039c11349171cf53917ae27186843856965b8de2ab39dbbfebec9cf752"
+        },
+        {
+          "path": "docs/hardware-validation.md",
+          "source": "docs/moduletwo-validation.md",
+          "title": "ModuleTwo library validation",
+          "sha256": "3b34d5899c6af2aa6ad23ddcac4f414ce69fb61962b333af3e2b46c567103bfc"
+        }
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ]
+    },
+    {
+      "repository": "tjorim/python-mygrid-voltbridge",
+      "revision": "f3adadcf40e7d4e1ce85c4035aa1a466fe490253",
+      "branch": "main",
+      "pages": [
+        {
+          "path": "README.md",
+          "source": "docs/voltbridge-python.md",
+          "title": "VoltBridge Python library",
+          "sha256": "d0ee7fc4eb9a17de09ca66f642543686bf01d3e7471ef35797cc9c4b674bed9b"
+        }
+      ],
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+        }
+      ]
+    }
+  ]
+}

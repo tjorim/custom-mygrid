@@ -1,20 +1,28 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { documentRoute, repository, siteUrl } from '../../../lib/paths.mjs';
+import { upstreamPage } from '../../../lib/upstream.mjs';
 import { describe } from '../../../lib/describe.mjs';
 import { navigation } from '../../../lib/nav.mjs';
 
 export async function getStaticPaths() {
   // Keys are relative to this file: four levels up is the repository root, three is site/.
-  const modules = import.meta.glob(['../../../../docs/**/*.md', '../../../README.md'], { eager: true });
+  const modules = import.meta.glob(['../../../../docs/**/*.md', '../../../README.md', '../../../../upstream/**/*.md'], { eager: true });
   return Object.entries(modules).flatMap(([file, doc]) => {
-    const source = file.startsWith('../../../../') ? file.slice(12) : `site/${file.slice(9)}`;
+    const physicalSource = file.startsWith('../../../../') ? file.slice(12) : `site/${file.slice(9)}`;
+    const imported = upstreamPage(physicalSource);
+    if (!physicalSource.startsWith('upstream/') && imported) return [];
+    const source = imported?.source ?? physicalSource;
     const route = documentRoute(source);
     if (route === undefined) return [];
-    return [{ params: { slug: route.slice(5).replace(/\/$/, '') || undefined }, props: { doc, source } }];
+    return [{ params: { slug: route.slice(5).replace(/\/$/, '') || undefined }, props: { doc, source, imported } }];
   });
 }
-const { doc, source } = Astro.props;
+const { doc, source, imported } = Astro.props;
+const sourceRepository = imported ? `https://github.com/${imported.repository}` : repository;
+const sourcePath = imported?.path ?? source;
+const revision = imported?.revision ?? 'main';
+const editBranch = imported?.branch ?? 'main';
 const { Content, getHeadings, rawContent } = doc;
 const headings = getHeadings();
 const labels = Object.fromEntries(navigation.flatMap(([, pages]) => pages));
@@ -38,7 +46,10 @@ const title = source === 'docs/README.md' ? 'Documentation'
       </details>}
     </aside>
     <article class="prose">
-      <div class="source-links"><a href={`${repository}/blob/main/${source}`}>View Markdown source ↗</a><a href={`${repository}/edit/main/${source}`}>Edit on GitHub ↗</a></div>
+      <div class="source-links"><a href={`${sourceRepository}/blob/${revision}/${sourcePath}`}>View Markdown source ↗</a><a href={`${sourceRepository}/edit/${editBranch}/${sourcePath}`}>Edit on GitHub ↗</a></div>
+      {imported && <p class="source-links">Maintained in {imported.repository} · revision <code>{revision.slice(0, 12)}</code>. Updates are reviewed before publication.</p>}
+      {source === 'docs/moduletwo.md' && <span id="known-issue-port-502-refuses-connections" />}
+      {source === 'docs/moduletwo.md' && <span id="hardware-validation-and-remaining-questions" />}
       <Content />
     </article>
   </main>

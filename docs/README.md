@@ -16,9 +16,10 @@ protocol documentation remain in their source repositories. The hand-maintained
 HACS repositories own the integration code and tests; Home Assistant installs
 their Python library dependencies from PyPI automatically.
 
-ModuleTwo Modbus is **closed by default**. Expect to need MyGrid support to
-open it for your unit; selecting Home Assistant in the app alone did not open
-TCP port 502 on the development unit. See the [known issue](moduletwo.md#known-issue-port-502-refuses-connections).
+ModuleTwo read-only library tests and partial Home Assistant hardware acceptance
+passed on **2026-11-09**. Link the battery to your MyGrid account and select
+Home Assistant control to enable Modbus. See the [setup guide](moduletwo.md#hardware-validation-and-remaining-questions)
+for the tested behavior and remaining limits.
 
 ## Development and alternatives
 

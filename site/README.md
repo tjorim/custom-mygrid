@@ -106,3 +106,40 @@ each project's Markdown locations, derive routes from them, share one page shell
 centralize the base path, pin dependencies, and verify the prefixed build in PR CI.
 Search is deferred: six documentation pages are readily reachable through the
 navigation and per-page contents list.
+
+## Upstream documentation ownership
+
+This website publishes complete integration and library guides inside its shared
+navigation. Maintain HA setup, entities, automations and troubleshooting in the
+integration repositories; maintain Python usage, protocol details and library
+validation in the library repositories. Keep cross-device introductions and
+project architecture here. Link to detailed guides instead of repeating them.
+
+`upstream/sources.json` maps authoritative files to stable website routes and
+pins each repository to a full commit SHA. `upstream/` contains exact, checked-in
+snapshots, not independently maintained copies. Do not edit those Markdown files:
+edit their upstream source, then run `pnpm docs:update`. Build-time SHA-256 checks
+reject accidental snapshot edits. Normal builds require no upstream network access.
+
+The weekly **Update upstream documentation** workflow (also manually runnable)
+refreshes pins and snapshots, validates the site, and opens or updates one PR.
+Enable **Allow GitHub Actions to create and approve pull requests** in repository
+Actions settings for automatic PR creation. Review that PR before merging; no
+upstream changes are published automatically. If validation fails, no update PR
+is pushed. Run the same commands locally when adding a source:
+
+```sh
+pnpm docs:update
+pnpm test
+pnpm run build
+pnpm run check:site
+```
+
+Imported pages show their upstream revision and link to the pinned source and
+upstream editing branch. Relative Markdown links to other imported pages stay on
+the website; other files link to the pinned upstream commit. Relative images use
+commit-pinned raw GitHub URLs; external badges retain their original URLs.
+Existing ModuleTwo and VoltBridge setup URLs are preserved. Their local `docs/`
+files are pointers for GitHub readers and are replaced by upstream content when
+rendering the website. The VoltBridge API reference remains hub-owned until an
+authoritative upstream replacement exists.
