@@ -1,3 +1,4 @@
+import { importedPages, upstreamUrl } from './upstream.mjs';
 // Kept independent of Astro so config, Markdown transforms and tests share routing.
 import { readdirSync } from 'node:fs';
 import path from 'node:path';
@@ -16,7 +17,9 @@ export function documentRoute(source) {
 }
 
 // Resolve relative URLs from the Markdown source, never from its published URL.
-export function rewriteUrl(url, source) {
+export function rewriteUrl(url, source, image = false) {
+  const upstream = upstreamUrl(url, source, image);
+  if (upstream !== undefined) return typeof upstream === 'string' ? upstream : siteUrl(documentRoute(upstream.source)) + upstream.suffix;
   if (!url || /^(?:[a-z][a-z\d+.-]*:|\/\/|#)/i.test(url)) return url;
   const [, pathname, suffix = ''] = url.match(/^([^?#]*)(.*)$/);
   if (!pathname) return url;
@@ -37,5 +40,5 @@ export function listSources() {
   const docs = readdirSync(root, { recursive: true })
     .map(name => `docs/${name.replaceAll(path.sep, '/')}`)
     .filter(source => documentRoute(source) !== undefined);
-  return [...docs, 'site/README.md'].sort();
+  return [...new Set([...docs, ...importedPages.map(page => page.source), 'site/README.md'])].sort();
 }

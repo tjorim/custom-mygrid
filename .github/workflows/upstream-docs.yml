@@ -1,0 +1,72 @@
+name: Update upstream documentation
+on:
+  schedule:
+    - cron: '23 6 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: upstream-documentation
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm docs:update
+        env:
+          GH_TOKEN: ${{ github.token }}
+      # GITHUB_TOKEN-created PRs do not trigger other workflows. Validate here.
+      - run: pnpm test && pnpm run build && pnpm run check:site
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: upstream-documentation
+          path: upstream/
+          if-no-files-found: error
+          retention-days: 1
+  propose:
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: upstream-documentation
+          path: upstream/
+      # No dependency installation, Markdown processing or repository scripts
+      # execute in this job. The write token exists only in this publishing step.
+      - name: Propose reviewed snapshot update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- upstream; then exit 0; fi
+          branch=automation/upstream-documentation
+          git checkout -B "$branch"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add upstream
+          git commit -m 'docs: refresh pinned upstream guides'
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null; then
+            git fetch origin "$branch:refs/remotes/origin/$branch"
+          fi
+          # gh reads GH_TOKEN at runtime; no credentials are persisted by checkout.
+          git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push --force-with-lease origin "$branch"
+          existing_pr=$(gh pr list --head "$branch" --state open --json number --jq '.[].number')
+          if [ -z "$existing_pr" ]; then
+            gh pr create --base main --head "$branch" --title 'docs: refresh pinned upstream guides' --body-file .github/upstream-docs-pr.md
+          fi

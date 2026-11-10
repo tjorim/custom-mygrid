@@ -8,7 +8,7 @@ export default function remarkLinks() {
     const source = path.relative(root, file.path).split(path.sep).join('/');
     function walk(node) {
       if (['link', 'image', 'definition'].includes(node.type)) {
-        node.url = rewriteUrl(node.url, source);
+        node.url = rewriteUrl(node.url, source, node.type === 'image');
       }
       node.children?.forEach(walk);
     }

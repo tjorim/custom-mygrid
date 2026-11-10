@@ -53,3 +53,25 @@ test('Remark handles direct links, images and reference definitions', () => {
   remarkLinks()({ children: nodes }, { path: fileURLToPath(new URL('../docs/README.md', import.meta.url)) });
   for (const node of nodes) assert.equal(node.url, '/custom-mygrid/assets/icon.svg');
 });
+
+test('imported guides resolve links against the pinned upstream repository', async () => {
+  const { importedPages } = await import('../site/lib/upstream.mjs');
+  const setup = importedPages.find(page => page.source === 'docs/moduletwo.md');
+  assert.equal(rewriteUrl('docs/hardware-acceptance.md#integration-observations', setup.file), '/custom-mygrid/docs/moduletwo-acceptance/#integration-observations');
+  assert.equal(rewriteUrl('custom_components/mygrid_modbus/manifest.json', setup.file), `https://github.com/${setup.repository}/blob/${setup.revision}/custom_components/mygrid_modbus/manifest.json`);
+  assert.equal(rewriteUrl('images/setup.png', setup.file, true), `https://raw.githubusercontent.com/${setup.repository}/${setup.revision}/images/setup.png`);
+  assert.equal(rewriteUrl('#installation', setup.file), '#installation');
+  assert.equal(new Set(importedPages.map(page => page.source)).size, importedPages.length);
+  assert.equal(new Set(importedPages.map(page => page.file)).size, importedPages.length);
+});
+
+test('checked-in upstream snapshots match their recorded hashes', async () => {
+  const { importedPages } = await import('../site/lib/upstream.mjs');
+  const { readFile } = await import('node:fs/promises');
+  const { createHash } = await import('node:crypto');
+  for (const page of importedPages) {
+    assert.match(page.revision, /^[a-f0-9]{40}$/);
+    const bytes = await readFile(new URL(`../${page.file}`, import.meta.url));
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), page.sha256, page.file);
+  }
+});
