@@ -28,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
       # GITHUB_TOKEN-created PRs do not trigger other workflows. Validate here.
       - run: pnpm test && pnpm run build && pnpm run check:site
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: upstream-documentation
           path: upstream/
