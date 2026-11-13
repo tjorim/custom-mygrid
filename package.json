@@ -16,7 +16,7 @@
     "docs:verify": "node scripts/sync-upstream.mjs"
   },
   "devDependencies": {
-    "@astrojs/markdown-remark": "7.3.6",
-    "astro": "7.4.9"
+    "@astrojs/markdown-remark": "7.3.7",
+    "astro": "7.4.10"
   }
 }
