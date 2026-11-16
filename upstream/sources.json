@@ -3,7 +3,7 @@
   "sources": [
     {
       "repository": "tjorim/ha-mygrid-modbus",
-      "revision": "795d5ccf91f044b3bc1883d331fe85b988f33af9",
+      "revision": "b129d75798cb95fe7a9c26cc27b4d91ccb85dc38",
       "branch": "main",
       "pages": [
         {
@@ -28,7 +28,7 @@
     },
     {
       "repository": "tjorim/ha-mygrid-voltbridge",
-      "revision": "eb37ad6e2377475cc07b15a425fe88e58fead56c",
+      "revision": "9ab338e953cff3a8348ba01437e978380f320902",
       "branch": "main",
       "pages": [
         {
@@ -47,7 +47,7 @@
     },
     {
       "repository": "tjorim/python-mygrid-modbus",
-      "revision": "cce14a3d65ea5ac0fb5af64facb29f38e6597466",
+      "revision": "683951f2d653119a49c1fa7a6c0ce1ee416e81aa",
       "branch": "main",
       "pages": [
         {
@@ -78,14 +78,14 @@
     },
     {
       "repository": "tjorim/python-mygrid-voltbridge",
-      "revision": "95b44b18cca53230e26764d4c67b35b297bb14bc",
+      "revision": "2ad50a647792ffca444c27fec1220c832334a4c4",
       "branch": "main",
       "pages": [
         {
           "path": "README.md",
           "source": "docs/voltbridge-python.md",
           "title": "VoltBridge Python library",
-          "sha256": "8acda616d12ffc3c7d0b211b3ab082478a2f1f75b6af2cf8103c4bf2653b7273"
+          "sha256": "d3644ea34695c2eea464b8beddbbe2390d9f42d3a4ee8911e3adb05b52b8cd41"
         },
         {
           "path": "docs/api.md",
