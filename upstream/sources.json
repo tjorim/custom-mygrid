@@ -3,7 +3,7 @@
   "sources": [
     {
       "repository": "tjorim/ha-mygrid-modbus",
-      "revision": "b129d75798cb95fe7a9c26cc27b4d91ccb85dc38",
+      "revision": "3e92c5b6bc8970638168d947601b9b2b68ba1e10",
       "branch": "main",
       "pages": [
         {
@@ -28,7 +28,7 @@
     },
     {
       "repository": "tjorim/ha-mygrid-voltbridge",
-      "revision": "9ab338e953cff3a8348ba01437e978380f320902",
+      "revision": "59e88dfebe3f3e4133210924815aa0273d7b0c5c",
       "branch": "main",
       "pages": [
         {
@@ -47,7 +47,7 @@
     },
     {
       "repository": "tjorim/python-mygrid-modbus",
-      "revision": "683951f2d653119a49c1fa7a6c0ce1ee416e81aa",
+      "revision": "bdf9a4179bbfb6a7ff20c006a5147dcceb581cd6",
       "branch": "main",
       "pages": [
         {
@@ -78,7 +78,7 @@
     },
     {
       "repository": "tjorim/python-mygrid-voltbridge",
-      "revision": "2ad50a647792ffca444c27fec1220c832334a4c4",
+      "revision": "e448dbb41046886903b01547bd44975d77dc81c6",
       "branch": "main",
       "pages": [
         {
